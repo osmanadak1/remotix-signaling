@@ -6,12 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-<<<<<<< HEAD
 </Project>
-=======
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
-  </ItemGroup>
-
-</Project>
->>>>>>> 25684ca5971cd163af6b25b34194a22c842c9b7e
