@@ -60,6 +60,30 @@ namespace RemotixSignalingServer
             }
         }
 
+        public async Task SendFileStart(string targetId, string fileName, long fileSize)
+        {
+            if (_connections.TryGetValue(targetId, out var targetConnectionId))
+            {
+                await Clients.Client(targetConnectionId).SendAsync("ReceiveFileStart", fileName, Context.User?.Identity?.Name ?? "Unknown", fileSize);
+            }
+        }
+
+        public async Task SendFileChunk(string targetId, string fileName, byte[] chunk, int chunkIndex, int chunkSize)
+        {
+            if (_connections.TryGetValue(targetId, out var targetConnectionId))
+            {
+                await Clients.Client(targetConnectionId).SendAsync("ReceiveFileChunk", fileName, Context.User?.Identity?.Name ?? "Unknown", chunk, chunkIndex, chunkSize);
+            }
+        }
+
+        public async Task SendFileEnd(string targetId, string fileName)
+        {
+            if (_connections.TryGetValue(targetId, out var targetConnectionId))
+            {
+                await Clients.Client(targetConnectionId).SendAsync("ReceiveFileEnd", fileName);
+            }
+        }
+
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             var itemsToRemove = _connections.Where(kvp => kvp.Value == Context.ConnectionId).ToList();
